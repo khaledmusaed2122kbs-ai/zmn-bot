@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZMN Bot - الصفحة الرئيسية</title>
+    <style>
+        /* إعدادات الألوان الأساسية والتصميم العام المظلم */
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #131926;
+            --primary-cyan: #00bfff;
+            --text-main: #ffffff;
+            --text-muted: #8f9cae;
+            --border-color: #1e293b;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* الهيدر أو شريط التنقل العلوي */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: rgba(11, 15, 25, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #00bfff, #0056b3);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: var(--text-main);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .btn-login {
+            background-color: var(--primary-cyan);
+            color: #000;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+
+        .btn-login:hover {
+            opacity: 0.9;
+            box-shadow: 0 0 15px rgba(0, 191, 255, 0.4);
+        }
+
+        /* القسم الرئيسي (Hero Section) */
+        .hero {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 30px auto;
+            font-size: 1.1rem;
+        }
+
+        .hero-action-btns {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-cyan);
+            color: #000;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        /* لوحة المراقبة المحاكية (Live Security Dashboard) */
+        .mock-dashboard {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: right;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        .dash-header {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 12px 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .dash-circles {
+            display: flex;
+            gap: 6px;
+        }
+
+        .circle {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #ff5f56;
+        }
+        .circle:nth-child(2) { background-color: #ffbd2e; }
+        .circle:nth-child(3) { background-color: #27c93f; }
+
+        .dash-title {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-family: monospace;
+        }
+
+        .dash-body {
+            padding: 15px;
+        }
+
+        .dash-status-bar {
+            font-size: 0.9rem;
+            color: var(--primary-cyan);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--primary-cyan);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.9); opacity: 0.6; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(0.9); opacity: 0.6; }
+        }
+
+        .log-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.9rem;
+        }
+
+        .log-right {
+            display: flex;
+            gap: 15px;
+            color: var(--text-muted);
+        }
+
+        .log-time {
+            font-family: monospace;
+        }
+
+        .log-text {
+            color: var(--text-main);
+        }
+
+        .badge {
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .badge-danger { background-color: rgba(239, 68, 68, 0.2); color: var(--danger-color); }
+        .badge-success { background-color: rgba(16, 185, 129, 0.2); color: var(--success-color); }
+
+        /* قسم الإحصائيات */
+        .stats-section {
+            display: flex;
+            justify-content: space-around;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .stat-card h3 {
+            font-size: 2rem;
+            color: var(--text-main);
+        }
+
+        .stat-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* الفوتر السفلي الجديد والمطور */
+        footer {
+            background-color: #070a12;
+            padding: 60px 20px 30px 20px;
+            border-top: 1px solid var(--border-color);
+            text-align: right;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+        }
+
+        .footer-brand .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .footer-brand p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            max-width: 320px;
+            margin-bottom: 15px;
+        }
+
+        .footer-lang {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .footer-links-column h4 {
+            color: var(--text-main);
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .footer-links-column ul {
+            list-style: none;
+        }
+
+        .footer-links-column ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links-column ul li a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .footer-links-column ul li a:hover {
+            color: var(--primary-cyan);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 40px auto 0 auto;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom p {
+            margin-bottom: 10px;
+        }
+
+        .registration-text {
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+            color: var(--text-muted);
+        }
+
+        /* محاكاة شعارات التوثيق الرسمي */
+        .verification-badges {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .v-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            color: #fff;
+        }
+
+        .v-badge-green {
+            border-color: #10b981;
+            color: #10b981;
+        }
+
+        /* توافق الشاشات (الجوال) */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 1.8rem; }
+            .stats-section { flex-direction: column; gap: 25px; }
+            .hero-action-btns { flex-direction: column; padding: 0 20px; }
+            .footer-container { grid-template-columns: 1fr; gap: 30px; text-align: center; }
+            .footer-brand p { margin: 0 auto 15px auto; }
+            .verification-badges { flex-direction: column; gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- الهيدر العلوي -->
+    <header>
+        <div class="logo-section">
+            <div class="logo-icon">Z</div>
+            <div class="logo-text">ZMN</div>
+        </div>
+        <div class="nav-buttons">
+            <span style="color: var(--text-muted); font-size: 14px; cursor: pointer;">English 🌐</span>
+            <a href="#" class="btn-login">Login</a>
+        </div>
+    </header>
+
+    <!-- القسم الرئيسي -->
+    <section class="hero">
+        <h1>حماية أمنية ذكية ومتقدمة لسيرفرك</h1>
+        <p>يراقب السيرفرات بشكل لحظي وتلقائي لصد الهجمات، التخريب، وإيقاف رتب الإدارة العشوائية في أقل من نصف ثانية.</p>
+        
+        <div class="hero-action-btns">
+            <a href="#" class="btn-primary">Add to Discord</a>
+            <a href="#" class="btn-secondary">Dashboard</a>
+        </div>
+
+        <!-- لوحة مراقبة وهمية تحاكي الموجودة بالصور -->
+        <div class="mock-dashboard">
+            <div class="dash-header">
+                <div class="dash-circles">
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                </div>
+                <div class="dash-title">zmn.sa/dashboard/security</div>
+            </div>
+            <div class="dash-body">
+                <div class="dash-status-bar">
+                    <div class="live-dot"></div>
+                    <span>الحماية المباشرة — جارية الآن ضد الثغرات والتخريب</span>
+                </div>
+
+                <div class="log-item">
+                    <div class="log-right">
+                        <span class="log-time">12:06:42</span>
+                        <span class="log-text">اكتشاف محاولة حذف القنوات الجماعي</span>
+                    </div>
+                    <span class="badge badge-danger">Banned</span>
+                </div>
+
+                <div class="log-item">
+                    <div class="log-right">
+                        <span class="log-time">12:06:35</span>
+                        <span class="log-text">منح رتبة مسؤول (Admin) بدون إذن</span>
+                    </div>
+                    <span class="badge badge-success">Roles cleared</span>
+                </div>
+
+                <div class="log-item">
+                    <div class="log-right">
+                        <span class="log-time">12:06:28</span>
+                        <span class="log-text">تغيير رابط السيرفر المخصص (Vanity URL)</span>
+                    </div>
+                    <span class="badge badge-success">Reverted</span>
+                </div>
+
+                <div class="log-item">
+                    <div class="log-right">
+                        <span class="log-time">12:06:21</span>
+                        <span class="log-text">إضافة بوت غير مصرح به للقائمة البيضاء</span>
+                    </div>
+                    <span class="badge badge-danger">Kicked</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم الإحصائيات السريعة -->
+    <section class="stats-section">
+        <div class="stat-card">
+            <h3>99.9%</h3>
+            <p>وقت التشغيل (Uptime)</p>
+        </div>
+        <div class="stat-card">
+            <h3>+422K</h3>
+            <p>المستخدمين النشطين</p>
+        </div>
+        <div class="stat-card">
+            <h3>+3K</h3>
+            <p>السيرفرات المحمية</p>
+        </div>
+    </section>
+
+    <!-- الفوتر السفلي الجديد المطور (طبق الأصل من صور طلبك) -->
+    <footer>
+        <div class="footer-container">
+            <!-- عمود البراند واللغة -->
+            <div class="footer-brand">
+                <div class="logo-container">
+                    <div class="logo-icon">Z</div>
+                    <div class="logo-text">ZMN</div>
+                </div>
+                <p>The Ultimate Discord Bot for your server, still waiting to be found. Proudly made in Saudi Arabia 💚</p>
+                <div class="footer-lang">
+                    <span>English 🌐</span>
+                </div>
+            </div>
+
+            <!-- عمود المنتجات -->
+            <div class="footer-links-column">
+                <h4>Product</h4>
+                <ul>
+                    <li><a href="#">Features</a></li>
+                    <li><a href="#">Commands</a></li>
+                    <li><a href="#">Dashboard</a></li>
+                </ul>
+            </div>
+
+            <!-- عمود المصادر -->
+            <div class="footer-links-column">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="#">Documentation</a></li>
+                    <li><a href="#">Support</a></li>
+                    <li><a href="#">Status</a></li>
+                </ul>
+            </div>
+
+            <!-- عمود الشركة والخصوصية -->
+            <div class="footer-links-column">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- أسفل الفوتر: الحقوق والتوثيق الرسمي بالسعودية -->
+        <div class="footer-bottom">
+            <p>© 2026 ZMN Bot. All rights reserved.</p>
+            <div class="registration-text">Registered in Saudi Arabia</div>
+            
+            <!-- رموز محاكاة لوزارة التجارة والمركز السعودي للأعمال -->
+            <div class="verification-badges">
+                <div class="v-badge">
+                    <span>المركز السعودي للأعمال</span>
+                    <span style="color: #a855f7;">✦</span>
+                </div>
+                <div class="v-badge">
+                    <span>وزارة التجارة</span>
+                    <span style="color: #00bfff;">💼</span>
+                </div>
+                <div class="v-badge v-badge-green">
+                    <span>موثق 🇸🇦</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
